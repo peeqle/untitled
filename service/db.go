@@ -91,35 +91,3 @@ type ConnectionParticles struct {
 	databaseName string
 	sslEnabled   bool
 }
-
-func (cp *ConnectionParticles) toConnectionString() string {
-	result := ""
-	if cp.username != "" {
-		result += "username=" + cp.username
-	}
-
-	if cp.password != "" {
-		result += " password=" + cp.password
-	}
-
-	if cp.host != "" {
-		result += " host=" + cp.host
-	}
-
-	if cp.port != "" {
-		result += " port=" + cp.port
-	}
-
-	if cp.sslEnabled {
-		result += " sslmode="
-		if cp.sslEnabled {
-			result += "enable"
-		} else {
-			result += "disable"
-		}
-	} else {
-		result += " sslmode=disable"
-	}
-
-	return result
-}

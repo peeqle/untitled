@@ -7,4 +7,5 @@ import (
 
 func InitializeUserActivity(engine *gin.Engine) {
 	engine.POST("/register", auth.Register)
+	engine.POST("/login", auth.Login)
 }

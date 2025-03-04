@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	_ "github.com/jackc/pgx"
 	"github.com/jackc/pgx/v5"
@@ -15,6 +16,22 @@ import (
 )
 
 var DB *gorm.DB
+
+func FetchUserByUsername(username string) (models.User, error) {
+	var result models.User
+
+	err := DB.Where("username = ?", username).First(&result).Error
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return models.User{}, errors.New("user not found")
+	}
+
+	if err != nil {
+		return models.User{}, err
+	}
+
+	return result, nil
+}
 
 func ConnectDB() {
 	dsn := os.Getenv("DATABASE_URL")
